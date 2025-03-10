@@ -2,7 +2,10 @@ const express = require('express');
 const { METHODS } = require('http');
 const { userInfo } = require('os');
 const path = require('path');
+const { env } = require('process');
 const sqlite3 = require('sqlite3').verbose();
+
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -62,7 +65,7 @@ app.get('/jokes', (req, res) => {
 app.delete('/reset', (req, res) => {
     user = req.query.user;
     pwd = req.query.pwd;
-    if (user != 'admin' || pwd != 'admin') {
+    if (user != env.user || pwd != env.pwd) {
         return res.status(401).send('Unauthorized');
     }
     db.run("DELETE FROM jokes", function(err) {
