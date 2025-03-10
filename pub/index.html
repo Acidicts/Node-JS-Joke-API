@@ -3,9 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Joke-API Documentation</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
+    <h1>Node-JS-Joke-API</h1>
+    <p>The Node-JS-Joke-API is an Express-based web application that allows users to manage a collection of jokes stored in a SQLite database. The API supports adding, retrieving, deleting, and resetting jokes.</p>
+
+    <h2>Setup</h2>
+
+    <h3>Prerequisites</h3>
+    <ul>
+        <li>Node.js</li>
+        <li>npm</li>
+        <li>SQLite3</li>
+    </ul>
+
+    <h3>Installation</h3>
+    <ol>
+        <li>Clone the repository:
+            <pre><code>git clone https://github.com/Acidicts/Node-JS-Joke-API.git
+cd Node-JS-Joke-API</code></pre>
+        </li>
+        <li>Install dependencies:
+            <pre><code>npm install</code></pre>
+        </li>
+        <li>Create a <code>.env</code> file in the root directory and set the environment variables:
+            <pre><code>PORT=3000
+USER=&lt;your-username&gt;
+PWD=&lt;your-password&gt;</code></pre>
+        </li>
+        <li>Run the application:
+            <pre><code>node index.js</code></pre>
+        </li>
+        <li>The server will be running on <code>http://localhost:3000</code>.</li>
+    </ol>
+
+    <h2>Endpoints</h2>
+
+    <h3>GET /</h3>
+    <p>Serves the <code>index.html</code> file from the <code>pub</code> directory.</p>
+
+    <h3>POST /add</h3>
+    <p>Adds a new joke to the database.</p>
+    <ul>
+        <li><strong>Query Parameters:</strong>
+            <ul>
+                <li><code>joke</code> (string, required): The joke text.</li>
+            </ul>
+        </li>
+        <li><strong>Responses:</strong>
+            <ul>
+                <li><code>201 Created</code>: Returns the ID and joke text of the newly added joke.</li>
+                <li><code>400 Bad Request</code>: Joke is required.</li>
+                <li><code>500 Internal Server Error</code>: Error message.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>GET /jokes</h3>
+    <p>Retrieves all jokes from the database in HTML table format.</p>
+    <ul>
+        <li><strong>Responses:</strong>
+            <ul>
+                <li><code>200 OK</code>: Returns the HTML table with all jokes.</li>
+                <li><code>500 Internal Server Error</code>: Error message.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>DELETE /reset</h3>
+    <p>Deletes all jokes from the database.</p>
+    <ul>
+        <li><strong>Query Parameters:</strong>
+            <ul>
+                <li><code>user</code> (string, required): Username.</li>
+                <li><code>pwd</code> (string, required): Password.</li>
+            </ul>
+        </li>
+        <li><strong>Responses:</strong>
+            <ul>
+                <li><code>204 No Content</code>: Jokes deleted.</li>
+                <li><code>401 Unauthorized</code>: Incorrect username or password.</li>
+                <li><code>500 Internal Server Error</code>: Error message.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>DELETE /delete/:id</h3>
+    <p>Deletes a joke by its ID.</p>
+    <ul>
+        <li><strong>Path Parameters:</strong>
+            <ul>
+                <li><code>id</code> (integer, required): The ID of the joke to delete.</li>
+            </ul>
+        </li>
+        <li><strong>Responses:</strong>
+            <ul>
+                <li><code>204 No Content</code>: Joke deleted.</li>
+                <li><code>400 Bad Request</code>: ID is required.</li>
+                <li><code>500 Internal Server Error</code>: Error message.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>GET /random</h3>
+    <p>Retrieves a random joke from the database.</p>
+    <ul>
+        <li><strong>Responses:</strong>
+            <ul>
+                <li><code>200 OK</code>: Returns a random joke.</li>
+                <li><code>500 Internal Server Error</code>: Error message.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>GET /joke/:id</h3>
+    <p>Retrieves a joke by its ID.</p>
+    <ul>
+        <li><strong>Path Parameters:</strong>
+            <ul>
+                <li><code>id</code> (integer, required): The ID of the joke to retrieve.</li>
+            </ul>
+        </li>
+        <li><strong>Responses:</strong>
+            <ul>
+                <li><code>200 OK</code>: Returns the joke text.</li>
+                <li><code>400 Bad Request</code>: ID is required.</li>
+                <li><code>404 Not Found</code>: Joke not found.</li>
+                <li><code>500 Internal Server Error</code>: Error message.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>Database</h2>
+    <p>The application uses SQLite3 for database management. The database file is named <code>database.db</code> and is created in the root directory if it does not exist. The <code>jokes</code> table contains the following columns:</p>
+    <ul>
+        <li><code>id</code> (INTEGER, PRIMARY KEY, AUTOINCREMENT): The unique identifier for each joke.</li>
+        <li><code>joke</code> (TEXT, NOT NULL): The joke text.</li>
+    </ul>
+
+    <h2>Environment Variables</h2>
+    <ul>
+        <li><code>PORT</code>: The port on which the server will run. Default is <code>3000</code>.</li>
+        <li><code>USER</code>: The username for resetting the jokes.</li>
+        <li><code>PWD</code>: The password for resetting the jokes.</li>
+    </ul>
+
+    <h2>Static Files</h2>
+    <p>Static files are served from the <code>pub</code> directory.</p>
+
+    <h2>Running the Server</h2>
+    <p>To start the server, run:
+        <pre><code>node index.js</code></pre>
+    </p>
+    <p>The server will be running on the port specified in the <code>.env</code> file or default to <code>3000</code>.</p>
+
+    <h2>License</h2>
+    <p>This project is licensed under the MIT License.</p>
 </body>
 </html>
